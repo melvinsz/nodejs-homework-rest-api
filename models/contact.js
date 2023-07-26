@@ -19,6 +19,11 @@ const contactSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "userSchema",
+    required: true,
+  },
 });
 
 contactSchema.post("save", handleMongooseError);
@@ -28,7 +33,7 @@ const addSchema = Joi.object({
   email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
   phone: Joi.string()
     .regex(/^[0-9]{10}$/)
-    .messages({ "string.pattern.base": `Phone number must have 10 digits.` })
+    .messages({ "string.pattern.base": `Phone number must have 8 digits.` })
     .required(),
   favorite: Joi.boolean(),
 });
